@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_job_form_view" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form" />
+            <field name="arch" type="xml">
+                <group name="recruitment" position="after">
+                    <group name="salary" string="Salary">
+                        <label for="wage"/>
+                        <div class="o_row" name="wage">
+                            <field name="wage" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+    </data>
+</odoo>
