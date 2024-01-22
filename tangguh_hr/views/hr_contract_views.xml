@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_contract_form_inherit" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <group name="salary_and_advantages" position="inside">
+                <field name="meal_allowance" />
+                <field name="transportation_allowance" />
+            </group>
+            <page name="information" position="after">
+                <page name="bpjs" string="BPJS Information">
+                    <group name="bpjs">
+                        <group name="kesehatan">
+                            <field name="bpjs_kesehatan_emp_percent" />
+                            <field name="bpjs_kesehatan_emp" />
+                            <field name="bpjs_kesehatan_com_percent" />
+                            <field name="bpjs_kesehatan_com" />
+                        </group>
+                        <group name="ketenagakerjaan">
+                            <field name="bpjs_ketenagakerjaan_emp_percent" />
+                            <field name="bpjs_ketenagakerjaan_emp" />
+                            <field name="bpjs_ketenagakerjaan_com_percent" />
+                            <field name="bpjs_ketenagakerjaan_com" />
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>

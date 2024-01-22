@@ -15,6 +15,7 @@
     ],
     'data': [
         'views/hr_job_views.xml',
+        'views/hr_contract_views.xml',
     ],
     'demo': [
     ],
