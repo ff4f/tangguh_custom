@@ -27,6 +27,13 @@
                         </group>
                     </group>
                 </page>
+                <page name="pph21" string="PPh 21">
+                    <group>
+                        <group>
+                            <field name="payroll_tax"/>
+                        </group>
+                    </group>
+                </page>
             </page>
         </field>
     </record>
