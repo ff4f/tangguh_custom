@@ -11,6 +11,6 @@ class HrPayrollTax(models.Model):
     def name_get(self):
         result = []
         for line in self:
-            name = line.name + ' ' + line.percent
+            name = line.name + ' ' + str(line.percent) +"%"
             result.append((line.id, name))
         return result

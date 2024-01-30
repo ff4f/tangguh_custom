@@ -11,6 +11,7 @@
     'depends': [
         'hr',
         'hr_contract',
+        'hr_attendance',
         'base',
     ],
     'data': [
@@ -18,6 +19,7 @@
         'views/hr_payroll_tax_views.xml',
         'views/hr_job_views.xml',
         'views/hr_contract_views.xml',
+        'views/hr_attendance_views.xml',
     ],
     'demo': [
     ],

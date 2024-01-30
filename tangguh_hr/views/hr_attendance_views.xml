@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="job_id"/>
+            </field>
+            <field name="check_out" position="after">
+                <field name="total_working_hour"/>
+                <field name="planned_in"/>
+                <field name="planned_out"/>
+                <field name="normally_working_hour"/>
+                <field name="resource_calendar_id"/>
+                <field name="type"/>
+            </field>
+            <xpath expr="//group" position="after">
+                <group>
+                    <field name="one_five"/>
+                    <field name="two"/>
+                    <field name="three"/>
+                    <field name="four"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="job_id"/>
+            </field>
+            <field name="check_out" position="after">
+                <field name="planned_in"/>
+                <field name="planned_out"/>
+                <field name="total_working_hour"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
