@@ -17,8 +17,8 @@ class HrAttendance(models.Model):
         return overtime
 
     def calculate_total_working_hour(self):
-        check_in = self.check_in.hour
-        check_out = self.check_out.hour
+        check_in = self.check_in.hour + 7
+        check_out = self.check_out.hour + 7
         working_hour = 0
         while check_in < check_out:
             if check_in == 12 or check_in == 17:
