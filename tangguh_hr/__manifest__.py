@@ -12,6 +12,7 @@
         'hr',
         'hr_contract',
         'hr_attendance',
+        'hr_payroll',
         'base',
     ],
     'data': [

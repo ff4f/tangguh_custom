@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 
 class HrAttendance(models.Model):
 
@@ -21,11 +21,14 @@ class HrAttendance(models.Model):
         check_out = self.check_out.hour + 7
         working_hour = 0
         while check_in < check_out:
-            if check_in == 12 or check_in == 17:
+            if check_in in [12, 17]:
                 pass
             else:
                 working_hour += 1
             check_in += 1
+            
+        if check_out in [18, 19]:
+            working_hour += 1
         return working_hour
 
 
