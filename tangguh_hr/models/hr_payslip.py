@@ -19,10 +19,13 @@ class HrPayslip(models.Model):
         basic = self.env.ref('hr_payroll.BASIC')
         allowance = self.env.ref('hr_payroll.ALW')
         gross = self.env.ref('hr_payroll.GROSS')
+        net = self.env.ref('hr_payroll.NET')
+        deduction = self.env.ref('hr_payroll.DED')
         for work_days in self.worked_days_line_ids:
             work_days.number_of_days = days
 
         total = 0
+        total_ded = 0
         for line in self.line_ids.filtered(lambda x: x.category_id == basic or x.category_id == allowance):
             if line.category_id == basic:
                 if line.salary_rule_id.type_allowance == 'basic':
@@ -41,5 +44,13 @@ class HrPayslip(models.Model):
 
         for line in self.line_ids.filtered(lambda x: x.category_id == gross):
             line.amount = total
+
+        for line in self.line_ids.filtered(lambda x: x.category_id == deduction):
+            total_ded += line.total
+
+        total_net = total - total_ded
+
+        for line in self.line_ids.filtered(lambda x: x.category_id == net):
+            line.amount = total_net
 
         return result
