@@ -79,9 +79,22 @@ class HrAttendance(models.Model):
     )
     def _compute_total_working_hour(self):
         for line in self:
-            line.total_working_hour = line.calculate_total_working_hour()
+            total_working_hour = line.calculate_total_working_hour()
+            total_days = 0
+            allowance = 0
+            if line.type == 'weekday':
+                if total_working_hour >= 8:
+                    total_days = 1
+                else:
+                    total_days = 0.5
 
+            if line.check_in:
+                allowance = 1
 
+            line.total_working_hour = total_working_hour
+            line.total_days = total_days
+            line.transportation_allowance = allowance
+            line.meal_allowance = allowance
 
     job_id = fields.Many2one("hr.job", string="Job Position",
                              related="employee_id.job_id")
@@ -101,3 +114,6 @@ class HrAttendance(models.Model):
     two = fields.Float(string="2", compute='_compute_overtime')
     three = fields.Float(string="3", compute='_compute_overtime')
     four = fields.Float(string="4", compute='_compute_overtime')
+    total_days = fields.Float("Total Days", compute='_compute_total_working_hour')
+    transportation_allowance = fields.Float("Tranpostation Allowance", compute='_compute_total_working_hour')
+    meal_allowance = fields.Float("Meal Allowance", compute='_compute_total_working_hour')

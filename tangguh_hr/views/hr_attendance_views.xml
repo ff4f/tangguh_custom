@@ -18,10 +18,15 @@
             </field>
             <xpath expr="//group" position="after">
                 <group>
-                    <field name="one_five"/>
-                    <field name="two"/>
-                    <field name="three"/>
-                    <field name="four"/>
+                    <group>
+                        <field name="one_five"/>
+                        <field name="two"/>
+                        <field name="three"/>
+                        <field name="four"/>
+                        <field name="total_days"/>
+                        <field name="transportation_allowance"/>
+                        <field name="meal_allowance"/>
+                    </group>
                 </group>
             </xpath>
         </field>

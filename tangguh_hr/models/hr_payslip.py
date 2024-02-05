@@ -15,13 +15,25 @@ class HrPayslip(models.Model):
             ('check_in', '>=', time_from),
             ('check_out', '<=', time_to)]
         )
-        days = (len(attendances.filtered(lambda x: x.total_working_hour >= 8)) + (len(attendances.filtered(lambda x: x.total_working_hour < 8))) * 0.5) or 0
+        days = sum(attendances.mapped('total_days'))
         basic = self.env.ref('hr_payroll.BASIC')
         allowance = self.env.ref('hr_payroll.ALW')
         for work_days in self.worked_days_line_ids:
             work_days.number_of_days = days
 
         for line in self.line_ids.filtered(lambda x: x.category_id == basic or x.category_id == allowance):
-            line.quantity = days
+            if line.category_id == basic:
+                if line.salary_rule_id.type_allowance == 'basic':
+                    line.quantity = (sum(attendances.mapped('one_five')) * 1.5) + (sum(attendances.mapped('two')) * 2) + (sum(attendances.mapped('three')) * 3) + (sum(attendances.mapped('four')) * 4)
+
+                else:
+                    line.quantity = days
+
+            else:
+                if line.salary_rule_id.type_allowance == 'transportation':
+                    line.quantity = sum(attendances.mapped('transportation_allowance'))
+
+                elif line.salary_rule_id.type_allowance == 'meal':
+                    line.quantity = sum(attendances.mapped('meal_allowance'))
 
         return result
