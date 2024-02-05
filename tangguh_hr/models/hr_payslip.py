@@ -18,9 +18,11 @@ class HrPayslip(models.Model):
         days = sum(attendances.mapped('total_days'))
         basic = self.env.ref('hr_payroll.BASIC')
         allowance = self.env.ref('hr_payroll.ALW')
+        gross = self.env.ref('hr_payroll.GROSS')
         for work_days in self.worked_days_line_ids:
             work_days.number_of_days = days
 
+        total = 0
         for line in self.line_ids.filtered(lambda x: x.category_id == basic or x.category_id == allowance):
             if line.category_id == basic:
                 if line.salary_rule_id.type_allowance == 'basic':
@@ -35,5 +37,9 @@ class HrPayslip(models.Model):
 
                 elif line.salary_rule_id.type_allowance == 'meal':
                     line.quantity = sum(attendances.mapped('meal_allowance'))
+            total += line.total
+
+        for line in self.line_ids.filtered(lambda x: x.category_id == gross):
+            line.amount = total
 
         return result
