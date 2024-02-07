@@ -13,6 +13,7 @@
         'hr_contract',
         'hr_attendance',
         'hr_payroll',
+        'ohrms_salary_advance',
         'base',
     ],
     'data': [
@@ -22,6 +23,7 @@
         'views/hr_job_views.xml',
         'views/hr_contract_views.xml',
         'views/hr_attendance_views.xml',
+        'views/salary_advance_views.xml',
     ],
     'demo': [
     ],

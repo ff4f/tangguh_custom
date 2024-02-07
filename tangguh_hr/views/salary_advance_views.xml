@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_salary_advance_form" model="ir.ui.view">
+        <field name="name">salary.advance.view.form.inherit</field>
+        <field name="model">salary.advance</field>
+        <field name="inherit_id" ref="ohrms_salary_advance.view_salary_advance_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="replace">
+                <header>
+                    <button name="submit_to_manager" string="Submit" type="object" states="draft" class="oe_highlight"/>
+                    <button name="cancel" string="Cancel" type="object" states="draft,submit"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit"/>
+                </header>
+            </xpath>
+            <field name="credit" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="debit" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="journal" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+
+        </field>
+    </record>
+
+    <delete model="ir.ui.menu" id="ohrms_salary_advance.menu_my_salary_advance"/>
+    <delete model="ir.ui.menu" id="ohrms_salary_advance.menu_my_salary_advance_approved"/>
+</odoo>
