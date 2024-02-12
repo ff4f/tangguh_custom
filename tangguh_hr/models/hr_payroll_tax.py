@@ -6,6 +6,7 @@ class HrPayrollTax(models.Model):
 
     name = fields.Char("Name")
     percent = fields.Float("Percent")
+    ptkp = fields.Float("PTKP")
 
     @api.multi
     def name_get(self):

@@ -8,6 +8,7 @@
             <tree string="PPh 21 Structure" editable="bottom">
                 <field name="name"/>
                 <field name="percent"/>
+                <field name="ptkp"/>
             </tree>
         </field>
     </record>

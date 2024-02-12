@@ -18,6 +18,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'data/tangguh_hr_data.xml',
         'views/hr_payroll_tax_views.xml',
         'views/hr_salary_rule_views.xml',
         'views/hr_job_views.xml',

@@ -21,6 +21,7 @@ class HrPayslip(models.Model):
         gross = self.env.ref('hr_payroll.GROSS')
         net = self.env.ref('hr_payroll.NET')
         deduction = self.env.ref('hr_payroll.DED')
+        tax = self.env.ref('tangguh_hr.TAX')
         for work_days in self.worked_days_line_ids:
             work_days.number_of_days = days
 
@@ -33,18 +34,18 @@ class HrPayslip(models.Model):
         if salary_advance:
             if self.input_line_ids.filtered(lambda x: x.name == 'Salary Advance'):
                 for input in self.input_line_ids.filtered(lambda x: x.name == 'Salary Advance'):
-                    input.write({'amount': sum(salary_advance.mapped('advance'))})
+                    input.write({'amount': -sum(salary_advance.mapped('advance'))})
             else:
                 self.input_line_ids = [(0, 0, {
                     'name': 'Salary Advance',
                     'contract_id': self.contract_id.id,
                     'code': 'SAR',
-                    'amount': sum(salary_advance.mapped('advance'))
+                    'amount': -sum(salary_advance.mapped('advance'))
                 })]
 
             loan = sum(salary_advance.mapped('advance'))
 
-        for line in self.line_ids.filtered(lambda x: x.name == 'Salary Advance' or x.name == 'Advance Salary'):
+        for line in self.line_ids.filtered(lambda x: x.name == 'Salary Advance' or x.name == 'Advance Salary' or x.name == 'Pinjaman Karyawan'):
             line.amount = loan
 
 
@@ -71,6 +72,14 @@ class HrPayslip(models.Model):
 
         for line in self.line_ids.filtered(lambda x: x.category_id == deduction):
             total_ded += line.total
+
+        if self.contract_id.payroll_tax:
+            total_tax = (total - (self.contract_id.payroll_tax.ptkp/12))
+            if total_tax > 0:
+                tax_final = total_tax * self.contract_id.payroll_tax.percent / 100
+
+                for line in self.line_ids.filtered(lambda x: x.category_id == tax):
+                    line.amount = tax_final
 
         total_net = total - total_ded
 
