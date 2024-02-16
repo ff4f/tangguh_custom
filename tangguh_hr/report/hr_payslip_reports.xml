@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+
+        <report
+            id="action_report_payslip"
+            string="Report Payslip"
+            model="hr.payslip"
+            report_type="qweb-pdf"
+            name="tangguh_hr.report_report_payslip"
+            file="tangguh_hr.report_report_payslip"
+            menu="False"/>
+
+        <record id="action_report_payslip" model="ir.actions.report">
+            <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>
+        </record>
+
+</odoo>

@@ -19,12 +19,15 @@
     'data': [
         'security/ir.model.access.csv',
         'data/tangguh_hr_data.xml',
+        'wizards/wizard_report_payslip_views.xml',
         'views/hr_payroll_tax_views.xml',
         'views/hr_salary_rule_views.xml',
         'views/hr_job_views.xml',
         'views/hr_contract_views.xml',
         'views/hr_attendance_views.xml',
         'views/salary_advance_views.xml',
+        'report/report_payslip_templates.xml',
+        'report/hr_payslip_reports.xml',
     ],
     'demo': [
     ],

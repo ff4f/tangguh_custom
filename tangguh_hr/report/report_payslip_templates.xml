@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_report_payslip">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <h3 class="mb32">PT TERAS TEKNIK PERDANA</h3>
+                    <t t-set="header_calculate" t-value="get_header_calculate_pay"/>
+                    <t t-set="header_allowance" t-value="get_header_allowance_pay"/>
+                    <t t-set="header_deduction" t-value="get_header_deduction_pay"/>
+
+                </div>
+                <table class="table table-bordered mb32" style="table-layout:auto">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>JABATAN</th>
+                            <th>STATUS</th>
+                            <th>BASIC</th>
+                            <th><t t-esc="header_calculate[0]"/></th>
+                            <th><t t-esc="header_calculate[1]"/></th>
+                            <th><t t-esc="header_calculate[2]"/></th>
+                            <th><t t-esc="header_calculate[3]"/></th>
+                            <th><t t-esc="header_calculate[4]"/></th>
+                            <th><t t-esc="header_allowance[0]"/></th>
+                            <th><t t-esc="header_allowance[1]"/></th>
+                            <th>TOTAL</th>
+                            <th><t t-esc="header_deduction[0]"/></th>
+                            <th><t t-esc="header_deduction[1]"/></th>
+                            <th><t t-esc="header_deduction[2]"/></th>
+                            <th><t t-esc="header_deduction[3]"/></th>
+                            <th>GAJI BERSIH</th>
+                            <th>PEMBULATAN</th>
+                            <th>Tjk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="line_index" t-value="0"/>
+                        <t t-foreach="get_data_from_report" t-as="obj">
+                            <tr>
+                                <td>
+                                    <span t-esc="line_index + 1"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['name']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['position']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['status']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['basic']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['gaji_pokok']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['gaji_basic']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['jam_lembur']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['uang_lembur']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['total_upah']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['uang_transportasi']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['uang_makan']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['total_allowance']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['bpjs_kes']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['bpjs_ket']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['loan']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['total_pot']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['net']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['net_round']"/>
+                                </td>
+                                <td>
+                                    <t t-esc="obj['tjk']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+</odoo>
