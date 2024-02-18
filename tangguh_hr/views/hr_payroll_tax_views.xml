@@ -5,7 +5,7 @@
         <field name="name">hr.payroll.tax.tree</field>
         <field name="model">hr.payroll.tax</field>
         <field name="arch" type="xml">
-            <tree string="PPh 21 Structure" editable="bottom">
+            <tree string="PTKP Structure" editable="bottom">
                 <field name="name"/>
                 <!--<field name="percent"/>-->
                 <field name="ptkp"/>
@@ -14,7 +14,7 @@
     </record>
 
     <record id="action_view_hr_payroll_tax_tree" model="ir.actions.act_window">
-        <field name="name">PPh 21 </field>
+        <field name="name">PTKP </field>
         <field name="res_model">hr.payroll.tax</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree</field>

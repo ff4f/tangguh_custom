@@ -6,7 +6,7 @@ class HrContract(models.Model):
 
     meal_allowance = fields.Monetary('Meal Allowance')
     transportation_allowance = fields.Monetary('Transportation Allowance')
-    payroll_tax = fields.Many2one('hr.payroll.tax', string='PPh 21')
+    payroll_tax = fields.Many2one('hr.payroll.tax', string='PTKP')
     percent = fields.Float("Percent")
 
     #BPJS
