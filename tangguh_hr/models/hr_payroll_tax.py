@@ -8,10 +8,10 @@ class HrPayrollTax(models.Model):
     percent = fields.Float("Percent")
     ptkp = fields.Float("PTKP")
 
-    @api.multi
-    def name_get(self):
-        result = []
-        for line in self:
-            name = line.name + ' ' + str(line.percent) +"%"
-            result.append((line.id, name))
-        return result
+    # @api.multi
+    # def name_get(self):
+    #     result = []
+    #     for line in self:
+    #         name = line.name + ' ' + str(line.percent) +"%"
+    #         result.append((line.id, name))
+    #     return result

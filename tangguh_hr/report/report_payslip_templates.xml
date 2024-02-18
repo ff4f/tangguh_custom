@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_report_payslip">
-        <t t-call="web.html_container">
+    <template id="report_payslip_document">
+        <!--<t t-call="web.html_container">-->
             <t t-call="web.internal_layout">
                 <div class="page">
                     <h3 class="mb32">PT TERAS TEKNIK PERDANA</h3>
-                    <t t-set="header_calculate" t-value="get_header_calculate_pay"/>
-                    <t t-set="header_allowance" t-value="get_header_allowance_pay"/>
-                    <t t-set="header_deduction" t-value="get_header_deduction_pay"/>
+<!--                    <t t-set="header_calculate" t-value="get_header_calculate_pay"/>-->
+<!--                    <t t-set="header_allowance" t-value="get_header_allowance_pay"/>-->
+<!--                    <t t-set="header_deduction" t-value="get_header_deduction_pay"/>-->
 
                 </div>
                 <table class="table table-bordered mb32" style="table-layout:auto">
@@ -18,18 +18,18 @@
                             <th>JABATAN</th>
                             <th>STATUS</th>
                             <th>BASIC</th>
-                            <th><t t-esc="header_calculate[0]"/></th>
-                            <th><t t-esc="header_calculate[1]"/></th>
-                            <th><t t-esc="header_calculate[2]"/></th>
-                            <th><t t-esc="header_calculate[3]"/></th>
-                            <th><t t-esc="header_calculate[4]"/></th>
-                            <th><t t-esc="header_allowance[0]"/></th>
-                            <th><t t-esc="header_allowance[1]"/></th>
+                            <th>Gaji Pokok</th>
+                            <th>Gaji basic</th>
+                            <th>Jam Lembur</th>
+                            <th>Uang Lembur</th>
+                            <th>Total Upah</th>
+                            <th>Uang Makan</th>
+                            <th>Uang Transport</th>
                             <th>TOTAL</th>
-                            <th><t t-esc="header_deduction[0]"/></th>
-                            <th><t t-esc="header_deduction[1]"/></th>
-                            <th><t t-esc="header_deduction[2]"/></th>
-                            <th><t t-esc="header_deduction[3]"/></th>
+                            <th>Iuran BPJS Kesehatan</th>
+                            <th>Iuran BPJS Ketenagakerjaan</th>
+                            <th>Pinjaman</th>
+                            <th>Total Potongan</th>
                             <th>GAJI BERSIH</th>
                             <th>PEMBULATAN</th>
                             <th>Tjk</th>
@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                         <t t-set="line_index" t-value="0"/>
-                        <t t-foreach="get_data_from_report" t-as="obj">
+                        <t t-foreach="doc._generate_slip_value()" t-as="obj">
                             <tr>
                                 <td>
                                     <span t-esc="line_index + 1"/>
@@ -103,6 +103,14 @@
                         </t>
                     </tbody>
                 </table>
+            </t>
+        <!--</t>-->
+    </template>
+
+    <template id="report_payslip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="tangguh_hr.report_payslip_document"/>
             </t>
         </t>
     </template>

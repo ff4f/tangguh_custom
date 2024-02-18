@@ -4,10 +4,10 @@
         <report
             id="action_report_payslip"
             string="Report Payslip"
-            model="hr.payslip"
+            model="hr.payslip.run"
             report_type="qweb-pdf"
-            name="tangguh_hr.report_report_payslip"
-            file="tangguh_hr.report_report_payslip"
+            name="tangguh_hr.report_payslip"
+            file="tangguh_hr.report_payslip"
             menu="False"/>
 
         <record id="action_report_payslip" model="ir.actions.report">
