@@ -74,6 +74,9 @@ class HrPayslip(models.Model):
             for record in line.line_ids.filtered(lambda x: x.category_id == deduction):
                 total_ded += record.total
 
+            for record in line.line_ids.filtered(lambda x: x.name == 'Total Potongan'):
+                record.amount = total_ded
+
             if line.contract_id.payroll_tax:
                 total_tax = (total - (line.contract_id.payroll_tax.ptkp/12))
                 if total_tax > 0:
