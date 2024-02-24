@@ -96,6 +96,17 @@ class HrAttendance(models.Model):
             line.transportation_allowance = allowance
             line.meal_allowance = allowance
 
+    @api.depends(
+        'type',
+        'resource_calendar_id'
+    )
+    def _compute_normally_working_hour(self):
+        for line in self:
+            if line.type == 'weekday':
+                line.normally_working_hour = line.resource_calendar_id.hours_per_day
+            else:
+                line.normally_working_hour = False
+
     job_id = fields.Many2one("hr.job", string="Job Position",
                              related="employee_id.job_id")
     planned_in = fields.Datetime("Planned In")
@@ -104,7 +115,7 @@ class HrAttendance(models.Model):
         'resource.calendar', 'Working Schedule',
         related="employee_id.resource_calendar_id")
     total_working_hour = fields.Float("Total Working Hour", compute='_compute_total_working_hour')
-    normally_working_hour = fields.Float("Normally Working Hour", related='resource_calendar_id.hours_per_day')
+    normally_working_hour = fields.Float("Normally Working Hour", compute='_compute_normally_working_hour')
     overtime_working_hour = fields.Float("Overtime Hour", compute='_compute_overtime')
     type = fields.Selection([
         ('weekend', 'Weekend'),

@@ -10,6 +10,13 @@ class HrPayslipRun(models.Model):
         return self.env.ref('tangguh_hr.action_report_payslip')\
             .with_context(discard_logo_check=True).report_action(self)
 
+    @api.multi
+    def print_slip(self):
+        return self.env.ref('tangguh_hr.action_report_slip') \
+            .with_context(discard_logo_check=True).report_action(self)
+
+
+
     def _generate_slip_value(self):
         res = []
 

@@ -1,9 +1,44 @@
 from odoo import api, fields, models
 from datetime import datetime, timedelta, time
+import locale
+
+locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
 
 class HrPayslip(models.Model):
 
     _inherit = "hr.payslip"
+
+    def _get_employee_attendance(self):
+        res = []
+        time_from = datetime.combine(self.date_from, time(0, 0, 0))
+        time_to = datetime.combine(self.date_to, time(23, 59, 59))
+        attendances = self.env['hr.attendance'].search([
+            ('employee_id', '=', self.employee_id.id),
+            ('check_in', '>=', time_from),
+            ('check_out', '<=', time_to)]
+        )
+
+        for attendace in attendances:
+            check_in = attendace.check_in +timedelta(hours=7)
+            check_out = attendace.check_out +timedelta(hours=7)
+            res.append({
+                'tanggal_masuk': check_in.strftime('%d-%m-%Y'),
+                'hari': check_in.strftime('%A'),
+                'jam_masuk': check_in.strftime('%H:%M'),
+                'jam_keluar': check_out.strftime('%H:%M'),
+                'tjk': attendace.total_working_hour,
+                'njk': attendace.normally_working_hour,
+                'gb': 1.0 if attendace.normally_working_hour == 8 else '-',
+                'gp': '-',
+                '1,5': attendace.one_five,
+                '2': attendace.two,
+                '3': attendace.three,
+                '4': attendace.four,
+                'uang_makan': attendace.meal_allowance,
+                'uang_transport': attendace.transportation_allowance,
+            })
+
+        return res
 
     @api.multi
     def compute_sheet(self):

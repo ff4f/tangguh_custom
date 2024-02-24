@@ -10,6 +10,19 @@
             file="tangguh_hr.report_payslip"
             menu="False"/>
 
+        <report
+            id="action_report_slip"
+            string="Report Slip Gaji"
+            model="hr.payslip.run"
+            report_type="qweb-pdf"
+            name="tangguh_hr.report_slip_gaji"
+            file="tangguh_hr.report_slip_gaji"
+            menu="False"/>
+
+        <record id="action_report_payslip" model="ir.actions.report">
+            <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>
+        </record>
+
         <record id="action_report_payslip" model="ir.actions.report">
             <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>
         </record>
