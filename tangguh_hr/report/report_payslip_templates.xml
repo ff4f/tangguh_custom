@@ -11,7 +11,7 @@
 
                 </div>
                 <table class="table table-bordered mb32" style="table-layout:auto">
-                    <thead>
+<!--                    <thead>-->
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -34,7 +34,7 @@
                             <th>PEMBULATAN</th>
                             <th>Tjk</th>
                         </tr>
-                    </thead>
+<!--                    </thead>-->
                     <tbody>
                         <t t-set="line_index" t-value="0"/>
                         <t t-foreach="doc._generate_slip_value()" t-as="obj">
@@ -175,7 +175,7 @@
                         <tbody>
                             <t t-foreach="slip._get_employee_attendance()" t-as="obj">
                                 <tr>
-                                    <td><span t-esc="obj['tanggal_masuk']"/><span t-esc="obj['hari']"/></td>
+                                    <td><span t-esc="obj['tanggal_masuk']"/> - <span t-esc="obj['hari']"/></td>
                                     <td><span t-esc="obj['jam_masuk']"/></td>
                                     <td></td>
                                     <td><span t-esc="obj['jam_keluar']"/></td>
@@ -193,6 +193,26 @@
                             </t>
                         </tbody>
                     </table>
+
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-4" style="border-top: 1px solid black; border-left: 1px solid black;">Diketahui Oleh,</div>
+                                <div class="col-4" style="border-top: 1px solid black;">Dibuat Oleh,</div>
+                                <div class="col-4" style="border-top: 1px solid black; border-right: 1px solid black;">Penerima,</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4" style="border-top: 1px solid black; border-left: 1px solid black;"><br/><br/><br/></div>
+                                <div class="col-4" style="border-top: 1px solid black;"><br/><br/><br/></div>
+                                <div class="col-4" style="border-top: 1px solid black; border-right: 1px solid black;"><br/><br/><br/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">Ade Kurniawan</div>
+                                <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black;">Resti Fauziati</div>
+                                <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black; border-right: 1px solid black;"><span t-esc="slip.employee_id.display_name"/></div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </t>
     </template>

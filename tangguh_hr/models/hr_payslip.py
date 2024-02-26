@@ -15,7 +15,8 @@ class HrPayslip(models.Model):
         attendances = self.env['hr.attendance'].search([
             ('employee_id', '=', self.employee_id.id),
             ('check_in', '>=', time_from),
-            ('check_out', '<=', time_to)]
+            ('check_out', '<=', time_to)],
+            order='check_in asc'
         )
 
         for attendace in attendances:

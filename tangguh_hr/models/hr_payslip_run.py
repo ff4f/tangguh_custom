@@ -61,3 +61,10 @@ class HrPayslipRun(models.Model):
                 })
 
         return res
+
+    def get_excel_report(self):
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/payslip/excel_payslip_report/%s' % (self.id),
+            'target': 'new',
+            }
