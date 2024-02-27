@@ -149,8 +149,9 @@
                         </tr>
                     </table>
                     <br/>
+                    <t t-set="lines" t-value="slip._get_employee_attendance()"/>
                     <table class="table table-bordered mb32" style="table-layout:auto">
-                        <thead style="vertical-align : middle;text-align:center;">
+                       <!-- <thead style="vertical-align : middle;text-align:center;">-->
                             <tr>
                                 <th rowspan="2">TANGGAL HARI</th>
                                 <th colspan="3">JAM</th>
@@ -171,9 +172,9 @@
                                 <th>3</th>
                                 <th>4</th>
                             </tr>
-                        </thead>
+                        <!--</thead>-->
                         <tbody>
-                            <t t-foreach="slip._get_employee_attendance()" t-as="obj">
+                            <t t-foreach="lines" t-as="obj">
                                 <tr>
                                     <td><span t-esc="obj['tanggal_masuk']"/> - <span t-esc="obj['hari']"/></td>
                                     <td><span t-esc="obj['jam_masuk']"/></td>
@@ -191,6 +192,25 @@
                                     <td><span t-esc="obj['uang_transport']"/></td>
                                 </tr>
                             </t>
+                             <t t-set="calc" t-value="slip._compute_total_hour()"/>
+                            <tr>
+                                <th colspan="4"></th>
+                                <th><span t-esc="calc[0]"/></th>
+                                <th><span t-esc="calc[1]"/></th>
+                                <th><span t-esc="calc[2]"/></th>
+                                <th><span t-esc="calc[3]"/></th>
+                                <th><span t-esc="calc[4]"/></th>
+                                <th><span t-esc="calc[5]"/></th>
+                                <th><span t-esc="calc[6]"/></th>
+                                <th><span t-esc="calc[7]"/></th>
+                                <th><span t-esc="calc[8]"/></th>
+                                <th><span t-esc="calc[9]"/></th>
+                            </tr>
+                            <tr>
+                                <th colspan="8">TOTAL LEMBUR</th>
+                                <th colspan="2"><span t-esc="calc[10]"/></th>
+                                <th colspan="2">JAM</th>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -210,9 +230,14 @@
                                 <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">Ade Kurniawan</div>
                                 <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black;">Resti Fauziati</div>
                                 <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black; border-right: 1px solid black;"><span t-esc="slip.employee_id.display_name"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black; border-left: 1px solid black;">Site Manager</div>
+                                <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black;">Adm.</div>
+                                <div class="col-4" style="border-top: 1px solid black; border-bottom: 1px solid black; border-right: 1px solid black;"><span t-esc="slip.employee_id.job_id.display_name"/></div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </t>
     </template>

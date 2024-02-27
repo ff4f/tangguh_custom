@@ -22,6 +22,13 @@ class HrPayslip(models.Model):
         for attendace in attendances:
             check_in = attendace.check_in +timedelta(hours=7)
             check_out = attendace.check_out +timedelta(hours=7)
+            if attendace.total_working_hour >= 8:
+                gb = 1
+            elif  attendace.total_working_hour < 8 and attendace.total_working_hour >= 1:
+                gb = 0.5
+            else:
+                gb = 0
+
             res.append({
                 'tanggal_masuk': check_in.strftime('%d-%m-%Y'),
                 'hari': check_in.strftime('%A'),
@@ -29,7 +36,7 @@ class HrPayslip(models.Model):
                 'jam_keluar': check_out.strftime('%H:%M'),
                 'tjk': attendace.total_working_hour,
                 'njk': attendace.normally_working_hour,
-                'gb': 1.0 if attendace.normally_working_hour == 8 else '-',
+                'gb': gb,
                 'gp': '-',
                 '1,5': attendace.one_five,
                 '2': attendace.two,
@@ -40,6 +47,40 @@ class HrPayslip(models.Model):
             })
 
         return res
+
+    def _compute_total_hour(self):
+        time_from = datetime.combine(self.date_from, time(0, 0, 0))
+        time_to = datetime.combine(self.date_to, time(23, 59, 59))
+        attendances = self.env['hr.attendance'].search([
+            ('employee_id', '=', self.employee_id.id),
+            ('check_in', '>=', time_from),
+            ('check_out', '<=', time_to)]
+        )
+        gb_tot = 0
+
+        for attendace in attendances:
+            if attendace.total_working_hour >= 8:
+                gb = 1
+            elif  attendace.total_working_hour < 8 and attendace.total_working_hour >= 1:
+                gb = 0.5
+            else:
+                gb = 0
+            gb_tot += gb
+
+        tjk = sum(attendances.mapped('total_working_hour'))
+        njk = sum(attendances.mapped('normally_working_hour'))
+        gp = '-'
+        one_five = sum(attendances.mapped('one_five'))
+        two = sum(attendances.mapped('one_five'))
+        three = sum(attendances.mapped('three'))
+        four = sum(attendances.mapped('four'))
+        uang_makan = sum(attendances.mapped('meal_allowance'))
+        uang_transport = sum(attendances.mapped('transportation_allowance'))
+        total_lembur = (one_five * 1.5) + (two * 2) + (three * 3) + (four * 4)
+
+        return tjk, njk, gb_tot, gp, one_five, two, three, four, uang_makan, uang_transport, total_lembur
+
+
 
     @api.multi
     def compute_sheet(self):
