@@ -1,8 +1,18 @@
 from odoo import api, fields, models
 from datetime import datetime, timedelta, time
-import locale
+# import locale
+#
+# locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
 
-locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
+nama_hari = {
+    0: 'Minggu',
+    1: 'Senin',
+    2: 'Selasa',
+    3: 'Rabu',
+    4: 'Kamis',
+    5: 'Jumat',
+    6: 'Sabtu'
+}
 
 class HrPayslip(models.Model):
 
@@ -22,6 +32,8 @@ class HrPayslip(models.Model):
         for attendace in attendances:
             check_in = attendace.check_in +timedelta(hours=7)
             check_out = attendace.check_out +timedelta(hours=7)
+
+            indeks_hari = check_in.weekday()
             if attendace.total_working_hour >= 8:
                 gb = 1
             elif  attendace.total_working_hour < 8 and attendace.total_working_hour >= 1:
@@ -31,7 +43,7 @@ class HrPayslip(models.Model):
 
             res.append({
                 'tanggal_masuk': check_in.strftime('%d-%m-%Y'),
-                'hari': check_in.strftime('%A'),
+                'hari': nama_hari[indeks_hari],
                 'jam_masuk': check_in.strftime('%H:%M'),
                 'jam_keluar': check_out.strftime('%H:%M'),
                 'tjk': attendace.total_working_hour,
