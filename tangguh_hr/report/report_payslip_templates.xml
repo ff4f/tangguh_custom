@@ -193,7 +193,18 @@
                                     <td><span t-esc="obj['uang_makan']"/></td>
                                     <td><span t-esc="obj['uang_transport']"/></td>
                                     <t t-if="counter == 1">
-                                      <td t-att-rowspan="len(lines)"></td>
+                                      <td t-att-rowspan="len(lines)">
+                                          <div class="col-12">
+                                          <div class="row">
+                                            <strong>A. Gaji</strong>
+                                          </div>
+                                          <div class="row">
+                                            <div>Gaji P = 0 hr</div>
+                                            <div> x Rp 199000</div>
+                                            <div>= Rp </div>
+                                          </div>
+                                        </div>
+                                      </td>
                                     </t>
                                 </tr>
                             </t>
