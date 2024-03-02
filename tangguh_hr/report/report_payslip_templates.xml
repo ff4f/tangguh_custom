@@ -111,15 +111,15 @@
         <!--<t t-call="web.html_container">-->
             <t t-call="web.internal_layout">
                 <div class="page">
-                    <h3 class="mb32">PT TERAS TEKNIK PERDANA</h3>
+                    <h5 class="mb32">PT TERAS TEKNIK PERDANA</h5>
 
-                    <table class="table table-bordered mb32" style="table-layout:auto">
+                    <table class="table table-bordered table-sm" style="table-layout:auto">
                         <tr>
-                            <th>Project</th>
+                            <th width="8%">Project</th>
                             <th>:</th>
                             <th/>
                             <th rowspan="4" style="vertical-align : middle;text-align:center;">SLIP GAJI KARYAWAN</th>
-                            <th>NO</th>
+                            <th width="8%">NO</th>
                             <th>:</th>
                             <th>2</th>
                         </tr>
@@ -153,15 +153,16 @@
                     <table class="table table-bordered mb32" style="table-layout:auto">
                        <!-- <thead style="vertical-align : middle;text-align:center;">-->
                             <tr>
-                                <th rowspan="2">TANGGAL HARI</th>
+                                <th rowspan="2" width="10%">TANGGAL HARI</th>
                                 <th colspan="3">JAM</th>
                                 <th rowspan="2">TJK</th>
                                 <th rowspan="2">NJK</th>
                                 <th rowspan="2">GB</th>
                                 <th rowspan="2">GP</th>
                                 <th colspan="4">LEMBUR</th>
-                                <th rowspan="2">Uang Makan</th>
-                                <th rowspan="2">Uang Trans</th>
+                                <th rowspan="2" width="3%">Uang Makan</th>
+                                <th rowspan="2" width="3%">Uang Trans</th>
+                                <th rowspan="2" width="30%">Uraian</th>
                             </tr>
                             <tr>
                                 <th>Masuk</th>
@@ -174,6 +175,7 @@
                             </tr>
                         <!--</thead>-->
                         <tbody>
+                            <t t-set="counter" t-value="0"/>
                             <t t-foreach="lines" t-as="obj">
                                 <tr>
                                     <td><span t-esc="obj['tanggal_masuk']"/> - <span t-esc="obj['hari']"/></td>
@@ -190,9 +192,12 @@
                                     <td><span t-esc="obj['4']"/></td>
                                     <td><span t-esc="obj['uang_makan']"/></td>
                                     <td><span t-esc="obj['uang_transport']"/></td>
+                                    <t t-if="counter == 1">
+                                      <td t-att-rowspan="len(lines)"></td>
+                                    </t>
                                 </tr>
                             </t>
-                             <t t-set="calc" t-value="slip._compute_total_hour()"/>
+                            <t t-set="calc" t-value="slip._compute_total_hour()"/>
                             <tr>
                                 <th colspan="4"></th>
                                 <th><span t-esc="calc[0]"/></th>

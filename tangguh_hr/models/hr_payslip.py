@@ -5,13 +5,13 @@ from datetime import datetime, timedelta, time
 # locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
 
 nama_hari = {
-    0: 'Minggu',
-    1: 'Senin',
-    2: 'Selasa',
-    3: 'Rabu',
-    4: 'Kamis',
-    5: 'Jumat',
-    6: 'Sabtu'
+    0: 'Senin',
+    1: 'Selasa',
+    2: 'Rabu',
+    3: 'Kamis',
+    4: 'Jumat',
+    5: 'Sabtu',
+    6: 'Minggu'
 }
 
 class HrPayslip(models.Model):
@@ -34,12 +34,14 @@ class HrPayslip(models.Model):
             check_out = attendace.check_out +timedelta(hours=7)
 
             indeks_hari = check_in.weekday()
-            if attendace.total_working_hour >= 8:
-                gb = 1
-            elif  attendace.total_working_hour < 8 and attendace.total_working_hour >= 1:
-                gb = 0.5
-            else:
-                gb = 0
+
+            gb = 0
+            if indeks_hari not in (5, 6):
+                if attendace.total_working_hour >= 8:
+                    gb = 1
+                elif attendace.total_working_hour < 8 and attendace.total_working_hour >= 1:
+                    gb = 0.5
+
 
             res.append({
                 'tanggal_masuk': check_in.strftime('%d-%m-%Y'),
@@ -71,10 +73,12 @@ class HrPayslip(models.Model):
         gb_tot = 0
 
         for attendace in attendances:
-            if attendace.total_working_hour >= 8:
-                gb = 1
-            elif  attendace.total_working_hour < 8 and attendace.total_working_hour >= 1:
-                gb = 0.5
+            indeks_hari = attendace.check_in.weekday()
+            if indeks_hari not in (5, 6):
+                if attendace.total_working_hour >= 8:
+                    gb = 1
+                elif attendace.total_working_hour < 8 and attendace.total_working_hour >= 1:
+                    gb = 0.5
             else:
                 gb = 0
             gb_tot += gb
