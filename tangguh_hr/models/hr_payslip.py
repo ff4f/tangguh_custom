@@ -87,7 +87,7 @@ class HrPayslip(models.Model):
         njk = sum(attendances.mapped('normally_working_hour'))
         gp = '-'
         one_five = sum(attendances.mapped('one_five'))
-        two = sum(attendances.mapped('one_five'))
+        two = sum(attendances.mapped('two'))
         three = sum(attendances.mapped('three'))
         four = sum(attendances.mapped('four'))
         uang_makan = sum(attendances.mapped('meal_allowance'))
@@ -187,3 +187,83 @@ class HrPayslip(models.Model):
                 record.amount = round(total_net, -2)
 
         return result
+
+    def _get_basic_salary(self):
+        total = 0
+        amount = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'BASIC-DAY'):
+            total += record.total
+            amount += record.amount
+        return total, amount
+
+    def _get_lembur_salary(self):
+        total = 0
+        amount = 0
+        qty = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'LEMBUR'):
+            total += record.total
+            amount += record.amount
+            qty += record.quantity
+        return total, amount, qty
+
+    def _get_makan_salary(self):
+        total = 0
+        amount = 0
+        qty = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'MAKAN'):
+            total += record.total
+            amount += record.amount
+            qty += record.quantity
+        return total, amount, qty
+
+    def _get_transport_salary(self):
+        total = 0
+        amount = 0
+        qty = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'TRANSPORT'):
+            total += record.total
+            amount += record.amount
+            qty += record.quantity
+        return total, amount, qty
+
+    def _get_gross_salary(self):
+        total = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'GROSS-SALARY'):
+            total += record.total
+        return total
+
+    def _get_bpjs_kes(self):
+        total = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'BPJS-KES'):
+            total += record.total
+        return total
+
+    def _get_bpjs_tk(self):
+        total = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'BPJS-TK'):
+            total += record.total
+        return total
+
+    def _get_pinjaman(self):
+        total = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'SAR'):
+            total += record.total
+        return total
+
+    def _get_total_ded(self):
+        total = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'DED(SUM)'):
+            total += record.total
+        return total
+
+    def _get_total_receive(self):
+        total = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'NET'):
+            total += record.total
+        return total
+
+    def _get_total_pembulatan(self):
+        total = 0
+        for record in self.line_ids.filtered(lambda x: x.code == 'ROUND-NET'):
+            total += record.total
+        return total

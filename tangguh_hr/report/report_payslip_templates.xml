@@ -110,10 +110,10 @@
     <template id="report_slip_gaji_document">
         <!--<t t-call="web.html_container">-->
             <t t-call="web.internal_layout">
-                <div class="page">
+                <div class="page" style="font-size:8px;">
                     <h5 class="mb32">PT TERAS TEKNIK PERDANA</h5>
 
-                    <table class="table table-bordered table-sm" style="table-layout:auto">
+                    <table class="table table-bordered table-sm" style="table-layout:auto;">
                         <tr>
                             <th width="8%">Project</th>
                             <th>:</th>
@@ -135,9 +135,9 @@
                             <th>Jabatan</th>
                             <th>:</th>
                             <th><t t-esc="slip.employee_id.job_id.display_name"/></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th/>
+                            <th/>
+                            <th/>
                         </tr>
                         <tr>
                             <th>Status</th>
@@ -150,7 +150,7 @@
                     </table>
                     <br/>
                     <t t-set="lines" t-value="slip._get_employee_attendance()"/>
-                    <table class="table table-bordered mb32" style="table-layout:auto">
+                    <table class="table table-bordered table-sm" style="table-layout:auto">
                        <!-- <thead style="vertical-align : middle;text-align:center;">-->
                             <tr>
                                 <th rowspan="2" width="10%">TANGGAL HARI</th>
@@ -175,9 +175,11 @@
                             </tr>
                         <!--</thead>-->
                         <tbody>
+                            <t t-set="calc" t-value="slip._compute_total_hour()"/>
                             <t t-set="counter" t-value="0"/>
                             <t t-foreach="lines" t-as="obj">
                                 <tr>
+                                    <t t-set="counter" t-value="counter + 1"/>
                                     <td><span t-esc="obj['tanggal_masuk']"/> - <span t-esc="obj['hari']"/></td>
                                     <td><span t-esc="obj['jam_masuk']"/></td>
                                     <td></td>
@@ -194,23 +196,93 @@
                                     <td><span t-esc="obj['uang_transport']"/></td>
                                     <t t-if="counter == 1">
                                       <td t-att-rowspan="len(lines)">
-                                          <div class="col-12">
+                                        <div class="col-12">
                                           <div class="row">
                                             <strong>A. Gaji</strong>
                                           </div>
                                           <div class="row">
-                                            <div>Gaji P = 0 hr</div>
-                                            <div> x Rp 199000</div>
-                                            <div>= Rp </div>
+                                            <div><span>Gaji P = 0 hr x</span></div>
+                                            <div><span> Rp 199000 </span></div>
+                                            <div><span>= Rp </span></div>
+                                          </div>
+                                          <div class="row">
+                                            <t t-set="basic" t-value="slip._get_basic_salary()"/>
+                                            <div> Gaji B = <span t-esc="calc[2]"/> hr x</div>
+                                            <div> Rp <span t-esc="basic[1]"/></div>
+                                            <div> = Rp <span t-esc="basic[0]"/> </div>
+                                          </div>
+                                          <div class="row">
+                                            <div/>
+                                            <div>Total Gaji</div>
+                                            <div> = Rp <span t-esc="basic[0]"/></div>
+                                          </div>
+                                          <br/>
+                                          <div class="row">
+                                            <strong>B. Lembur</strong>
+                                          </div>
+                                          <div class="row">
+                                            <t t-set="lembur" t-value="slip._get_lembur_salary()"/>
+                                            <div> Total Lembur = <span t-esc="lembur[2]"/> jam x <span t-esc="lembur[1]"/> = Rp <span t-esc="lembur[0]"/> </div>
+                                          </div>
+                                          <br/>
+                                          <div class="row">
+                                            <strong>C. Uang Makan</strong>
+                                          </div>
+                                          <div class="row">
+                                            <t t-set="makan" t-value="slip._get_makan_salary()"/>
+                                            <div> Uang Makan = <span t-esc="makan[2]"/> hr x <span t-esc="makan[1]"/> = Rp <span t-esc="makan[0]"/> </div>
+                                          </div>
+                                          <br/>
+                                          <div class="row">
+                                            <strong>D. Uang Transport</strong>
+                                          </div>
+                                          <div class="row">
+                                            <t t-set="transport" t-value="slip._get_transport_salary()"/>
+                                            <div> Uang Transport = <span t-esc="transport[2]"/> hr x <span t-esc="transport[1]"/> = Rp <span t-esc="transport[0]"/> </div>
+                                          </div>
+                                          <br/>
+                                          <div class="row">
+                                            <strong>Total A + B + C + D = Rp <span t-esc="slip._get_gross_salary()"/> </strong>
+                                          </div>
+                                          <br/>
+                                          <div class="row">
+                                            <strong>E. Potongan</strong>
+                                          </div>
+                                          <div class="row">
+                                            <div> Iuran BPJS Kesehatan = Rp <span t-esc="slip._get_bpjs_kes()"/></div>
+                                          </div>
+                                          <div class="row">
+                                            <div> Iuran BPJS Ketenagakerjaan = Rp <span t-esc="slip._get_bpjs_tk()"/></div>
+                                          </div>
+                                          <div class="row">
+                                            <div> Pinjaman = Rp <span t-esc="slip._get_pinjaman()"/></div>
+                                          </div>
+                                          <div class="row">
+                                            <div> <strong>Total Potongan  = Rp <span t-esc="slip._get_total_ded()"/></strong></div>
+                                          </div>
+                                          <br/>
+                                          <div class="row">
+                                            <div> <strong>Total Diterima  = Rp <span t-esc="slip._get_total_receive()"/></strong></div>
+                                          </div>
+                                          <div class="row">
+                                            <div> <strong>PEMBULATAN  = Rp <span t-esc="slip._get_total_pembulatan()"/></strong></div>
                                           </div>
                                         </div>
+                                        <div class="row">
+                                          <div class="col-12">
+                                          <span><strong>Pemeberitahuan :</strong></span>
+                                          <br/>
+                                          <span>*) Bila terdapat kekeliruan perhitungan, karyawan diharapkan untuk memberitahukan kepada Perusahaan dalam waktu 3 (tiga) hari sejak diterimanya gaji</span>
+                                          <br/>
+                                          <span>*) Bila lebih dari 3 (tiga) hari tidak ada pemberitahuan, dianggap telah menerima dan menyetujui perhitungan gaji ini.</span>
+                                        </div></div>
                                       </td>
                                     </t>
+
                                 </tr>
                             </t>
-                            <t t-set="calc" t-value="slip._compute_total_hour()"/>
                             <tr>
-                                <th colspan="4"></th>
+                                <th colspan="4"/>
                                 <th><span t-esc="calc[0]"/></th>
                                 <th><span t-esc="calc[1]"/></th>
                                 <th><span t-esc="calc[2]"/></th>
