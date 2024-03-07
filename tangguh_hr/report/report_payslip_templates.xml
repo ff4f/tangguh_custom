@@ -201,20 +201,20 @@
                                             <strong>A. Gaji</strong>
                                           </div>
                                           <div class="row">
-                                            <div><span>Gaji P = 0 hr x</span></div>
-                                            <div><span> Rp 199000 </span></div>
-                                            <div><span>= Rp </span></div>
+                                            <div class="col-3"><span>Gaji Pokok</span></div>
+                                            <div class="col-5"><span> 0 hr x Rp 199000 </span></div>
+                                            <div class="col-4"><span>= Rp </span></div>
                                           </div>
                                           <div class="row">
                                             <t t-set="basic" t-value="slip._get_basic_salary()"/>
-                                            <div> Gaji B = <span t-esc="calc[2]"/> hr x</div>
-                                            <div> Rp <span t-esc="basic[1]"/></div>
-                                            <div> = Rp <span t-esc="basic[0]"/> </div>
+                                            <div class="col-3"> Gaji Basic </div>
+                                            <div class="col-5"><span t-esc="calc[2]"/> hr x Rp <span t-esc="basic[1]"/></div>
+                                            <div class="col-4">= Rp <span t-esc="basic[0]"/> </div>
                                           </div>
                                           <div class="row">
-                                            <div/>
-                                            <div>Total Gaji</div>
-                                            <div> = Rp <span t-esc="basic[0]"/></div>
+                                            <div class="col-3"/>
+                                            <div class="col-5">Total Gaji</div>
+                                            <div class="col-4">= Rp <span t-esc="basic[0]"/></div>
                                           </div>
                                           <br/>
                                           <div class="row">
@@ -222,7 +222,9 @@
                                           </div>
                                           <div class="row">
                                             <t t-set="lembur" t-value="slip._get_lembur_salary()"/>
-                                            <div> Total Lembur = <span t-esc="lembur[2]"/> jam x <span t-esc="lembur[1]"/> = Rp <span t-esc="lembur[0]"/> </div>
+                                            <div class="col-3">ttl Lembur</div>
+                                            <div class="col-5"><span t-esc="lembur[2]"/>jam x <span t-esc="lembur[1]"/> </div>
+                                            <div class="col-4">= Rp <span t-esc="lembur[0]"/></div>
                                           </div>
                                           <br/>
                                           <div class="row">
@@ -230,7 +232,9 @@
                                           </div>
                                           <div class="row">
                                             <t t-set="makan" t-value="slip._get_makan_salary()"/>
-                                            <div> Uang Makan = <span t-esc="makan[2]"/> hr x <span t-esc="makan[1]"/> = Rp <span t-esc="makan[0]"/> </div>
+                                            <div class="col-3">Uang Makan</div>
+                                            <div class="col-5"><span t-esc="makan[2]"/> hr x <span t-esc="makan[1]"/> </div>
+                                            <div class="col-4">= Rp<span t-esc="makan[0]"/></div>
                                           </div>
                                           <br/>
                                           <div class="row">
@@ -238,34 +242,43 @@
                                           </div>
                                           <div class="row">
                                             <t t-set="transport" t-value="slip._get_transport_salary()"/>
-                                            <div> Uang Transport = <span t-esc="transport[2]"/> hr x <span t-esc="transport[1]"/> = Rp <span t-esc="transport[0]"/> </div>
+                                            <div class="col-3">Uang Transport</div>
+                                            <div class="col-5"><span t-esc="transport[2]"/> hr x <span t-esc="transport[1]"/></div>
+                                            <div class="col-4">= Rp <span t-esc="transport[0]"/></div>
                                           </div>
                                           <br/>
                                           <div class="row">
-                                            <strong>Total A + B + C + D = Rp <span t-esc="slip._get_gross_salary()"/> </strong>
+                                            <div class="col-8"><strong>Total A + B + C + D</strong></div>
+                                            <div class="col-4"><strong>= Rp <span t-esc="slip._get_gross_salary()"/></strong></div>
                                           </div>
                                           <br/>
                                           <div class="row">
                                             <strong>E. Potongan</strong>
                                           </div>
                                           <div class="row">
-                                            <div> Iuran BPJS Kesehatan = Rp <span t-esc="slip._get_bpjs_kes()"/></div>
+                                            <div class="col-8">Iuran BPJS Kesehatan</div>
+                                            <div class="col-4">= Rp <span t-esc="slip._get_bpjs_kes()"/></div>
                                           </div>
                                           <div class="row">
-                                            <div> Iuran BPJS Ketenagakerjaan = Rp <span t-esc="slip._get_bpjs_tk()"/></div>
+                                            <div class="col-8">Iuran BPJS Ketenagakerjaan</div>
+                                            <div class="col-4">= Rp <span t-esc="slip._get_bpjs_tk()"/></div>
                                           </div>
                                           <div class="row">
-                                            <div> Pinjaman = Rp <span t-esc="slip._get_pinjaman()"/></div>
+                                            <div class="col-8"> Pinjaman</div>
+                                            <div class="col-4">= Rp <span t-esc="slip._get_pinjaman()"/></div>
                                           </div>
                                           <div class="row">
-                                            <div> <strong>Total Potongan  = Rp <span t-esc="slip._get_total_ded()"/></strong></div>
+                                            <div class="col-8"><strong>Total Potongan</strong></div>
+                                            <div class="col-4"><strong>= Rp <span t-esc="slip._get_total_ded()"/></strong></div>
                                           </div>
                                           <br/>
                                           <div class="row">
-                                            <div> <strong>Total Diterima  = Rp <span t-esc="slip._get_total_receive()"/></strong></div>
+                                            <div class="col-8"><strong>Total Diterima</strong></div>
+                                            <div class="col-4"><strong>= Rp <span t-esc="slip._get_total_receive()"/></strong></div>
                                           </div>
                                           <div class="row">
-                                            <div> <strong>PEMBULATAN  = Rp <span t-esc="slip._get_total_pembulatan()"/></strong></div>
+                                            <div class="col-8"><strong>PEMBULATAN</strong></div>
+                                            <div class="col-4"><strong>= Rp <span t-esc="slip._get_total_pembulatan()"/></strong></div>
                                           </div>
                                         </div>
                                         <div class="row">
@@ -278,7 +291,6 @@
                                         </div></div>
                                       </td>
                                     </t>
-
                                 </tr>
                             </t>
                             <tr>
