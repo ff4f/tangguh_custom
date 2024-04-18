@@ -1,4 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_hr_payroll_tax_user,access_hr_payroll_tax_user,model_hr_payroll_tax,hr.group_hr_user,1,1,1,1
 access_hr_payroll_tax_manager,access_hr_payroll_tax_manager,model_hr_payroll_tax,hr_payroll.group_hr_payroll_user,1,1,1,1
+access_hr_payroll_tax_line_user,access_hr_payroll_tax_line_user,model_hr_payroll_tax_line,hr.group_hr_user,1,1,1,1
+access_hr_payroll_tax_line_manager,access_hr_payroll_tax_line_manager,model_hr_payroll_tax_line,hr_payroll.group_hr_payroll_user,1,1,1,1
 access_wizard_report_payslip_user,access_wizard_report_payslip_user,model_wizard_report_payslip,hr_payroll.group_hr_payroll_user,1,1,1,1

@@ -18,7 +18,7 @@ class HrAttendance(models.Model):
 
     def calculate_total_working_hour(self):
         check_in = self.check_in.hour + 7
-        check_out = self.check_out.hour + 7
+        check_out = self.check_out.hour + 7 if self.check_out else 0
         working_hour = 0
         while check_in < check_out:
             if check_in in [12, 17]:
